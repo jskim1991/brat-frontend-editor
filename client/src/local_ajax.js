@@ -26,7 +26,7 @@ var LocalAjax = (function($, window, undefined) {
                 e_id = "";//Entity or Trigger
             if(!e_type){
                 //Trigger
-                e_type = data.collection.event_types.find( x => x.type === data.type );
+                e_type = data.collection.event_types.find( function (x) { return x.type === data.type; } );
                 if(e_type){
                     var trigger_id = "T" + (that.document.triggers.length + 1); //TODO: must absolutely be unique
                     e_id = "E" + (that.document.triggers.length + 1); //TODO: must absolutely be unique
@@ -96,7 +96,7 @@ var LocalAjax = (function($, window, undefined) {
         var splitTooLongFragment = function(offsets, data, e_id){
             var new_offsets = [];
 
-            if(maxFragmentLength > 0 && offsets.find( x => (x[1] - x[0]) > maxFragmentLength)){
+            if(maxFragmentLength > 0 && offsets.find( function (x) { return (x[1] - x[0]) > maxFragmentLength; })){
                 offsets.forEach(function(fragment){
                     var from = fragment[0],
                         to = fragment[1],
@@ -134,15 +134,15 @@ var LocalAjax = (function($, window, undefined) {
             if(data.id.substring(0, 1) == "E"){
                 //Event annotation
                 //data.normalisations ??
-                var annotation = data.document.events.find( x => x[0] === data.id );
+                var annotation = data.document.events.find(function (x) { return x[0] === data.id; });
                 var trigger_id = annotation[1];
-                var trigger = data.document.triggers.find( x => x[0] === trigger_id );
+                var trigger = data.document.triggers.find( function (x) { return x[0] === trigger_id; } );
                 trigger[1] = data.type;
                 trigger[2] = offsets;
-                e_type = data.collection.event_types.find( x => x.type === data.type );
+                e_type = data.collection.event_types.find( function (x) { return x.type === data.type; } );
             }else if(data.id.substring(0, 1) == "N"){
                 //Entity annotation
-                var entity = data.document.entities.find( x => x[0] === data.id );
+                var entity = data.document.entities.find( function (x) { return x[0] === data.id; } );
                 entity[1] = data.type;
                 entity[2] = splitTooLongFragment(offsets, data, data.id);
                 e_type = findType(data.collection.entity_types, data.type);
@@ -152,16 +152,16 @@ var LocalAjax = (function($, window, undefined) {
             }
             if(e_type){
                 //Removed all attributes for this particular annotation id
-                var existing_attrs = data.document.attributes.filter( x => x[2] === data.id);
+                var existing_attrs = data.document.attributes.filter( function (x) { return x[2] === data.id; });
                 existing_attrs.forEach(function(attr){
-                    var index = data.document.attributes.indexOf( x => x[0] === attr[0]); //TODO: this always returns -1
+                    var index = data.document.attributes.indexOf( function (x) { return x[0] === attr[0]; }); //TODO: this always returns -1
                     data.document.attributes.splice(index, 1);
                 });
 
                 //Re-add all attributes
                 for (var key in attrs) {
                     if(attrs.hasOwnProperty(key) && attrs[key]) {
-                        existing_attrs.find(x => x[1] === key);
+                        existing_attrs.find(function (x) { return x[1] === key; });
 
                         data.document.attributes.push([
                             "A" + (that.document.attributes.length + 1), //TODO: must absolutely be unique,
@@ -174,7 +174,7 @@ var LocalAjax = (function($, window, undefined) {
 
                 //Add/Edit comment content
                 if(data.comment.length){
-                    var comment = data.document.comments.find( x => x[0] === data.id);
+                    var comment = data.document.comments.find( function (x) { return x[0] === data.id; });
                     if(comment){
                         //Edit
                         comment[2] = data.comment;
@@ -243,7 +243,7 @@ var LocalAjax = (function($, window, undefined) {
         };
 
         var createRelation = function(data){
-            var e_type = data.collection.relation_types.find( x => x.type === data.type ); //Entity or Event
+            var e_type = data.collection.relation_types.find( function (x) { return x.type === data.type; } ); //Entity or Event
 
             if(!e_type){
                 //Event relation
@@ -255,7 +255,7 @@ var LocalAjax = (function($, window, undefined) {
                         }
                     })
                 });*/
-                e_type = data.document.events.find( x => x[0] === data.origin );
+                e_type = data.document.events.find( function (x) { return x[0] === data.origin; } );
                 if(e_type){
                     e_type[2].push([
                         data.type,
@@ -301,17 +301,17 @@ var LocalAjax = (function($, window, undefined) {
         };
 
         var editRelation = function(data){
-            var e_type = data.collection.relation_types.find( x => x.type === data.type ); //Entity or Event
+            var e_type = data.collection.relation_types.find( function (x) { return x.type === data.type; } ); //Entity or Event
 
             if(!e_type){
                 //Event relation
-                e_type = data.document.events.find( x => x[0] === data.origin );
+                e_type = data.document.events.find( function (x) { return x[0] === data.origin; } );
                 if(e_type){
 
                 }
             }else{
                 //Entity relation
-                var relation = data.document.relations.find( x => x[1] === data.old_type && x[2][0][1] === data.origin && x[2][1][1] === data.old_target );
+                var relation = data.document.relations.find( function (x) { return x[1] === data.old_type && x[2][0][1] === data.origin && x[2][1][1] === data.old_target; } );
                 relation[1] = data.type;
                 relation[2] = [
                     [e_type.args[0].role, data.origin],
