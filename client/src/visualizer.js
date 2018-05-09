@@ -2,8 +2,6 @@
 // vim:set ft=javascript ts=2 sw=2 sts=2 cindent:
 
 var Visualizer = (function($, window, undefined) {
-    var fontLoadTimeout = 5000; // 5 seconds
-  
     var DocumentData = function(text) {
       this.text = text;
       this.chunks = [];
@@ -261,8 +259,8 @@ var Visualizer = (function($, window, undefined) {
       });
     };
 
-    var Visualizer = function(dispatcher, svgId, webFontURLs) {
-      var $svgDiv = $('#' + svgId);
+    var Visualizer = function(element, dispatcher, svgId, webFontURLs, fontLoadTimeout) {
+      var $svgDiv = $(element).find('#' + svgId);
       if (!$svgDiv.length) {
         throw Error('Could not find container with id="' + svgId + '"');
       }
@@ -3125,7 +3123,7 @@ Util.profileStart('before render');
             console.error('Timeout in loading fonts');
             proceedWithFonts();
           }
-        }, fontLoadTimeout);
+        }, fontLoadTimeout || 5000); // default 5s
       }
 
       dispatcher.

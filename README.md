@@ -39,6 +39,7 @@ npm install brat-frontend-editor --save
 | overWriteModals | true or false | false |
 | showTooltip | true or false | false |
 | webFontURLs | array of 3 paths | ['fonts/Astloch-Bold.ttf','fonts/PT_Sans-Caption-Web-Regular.ttf','fonts/Liberation_Sans-Regular.ttf'] |
+| fontLoadTimeout | timeout of font loading | 1 |
 
 #### Integration in vanilla JavaScript
 ```html

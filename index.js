@@ -24,6 +24,7 @@ window.BratFrontendEditor = function(element, collData, docData, options) {
             'fonts/PT_Sans-Caption-Web-Regular.ttf',
             'fonts/Liberation_Sans-Regular.ttf'
         ],
+        fontLoadTimeout: 5000,
         ajax: 'local' // 'local', 'external' or 'normal'
     };
 
@@ -96,7 +97,7 @@ BratFrontendEditor.prototype = {
                     self.options.assetsPath + self.options.webFontURLs[1],
                     self.options.assetsPath + self.options.webFontURLs[2],
                 ];
-                self.visualizer = new Visualizer(self.dispatcher, 'svg', absoluteWebFontsURLS);
+                self.visualizer = new Visualizer(self.element, self.dispatcher, 'svg', absoluteWebFontsURLS, self.options.fontLoadTimeout);
                 self.svg = self.visualizer.svg;
                 if(self.options.activateEdition === true){
                     self.visualizerUI = new VisualizerUI(self.dispatcher, self.svg, self.options.showTooltip, self.options.overWriteModals);
