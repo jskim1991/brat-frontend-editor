@@ -49,8 +49,6 @@ var LocalAjax = (function ($, window, undefined) {
                 var e_id = "N" + uuidv4(), //TODO: must absolutely be unique
                     new_offsets = splitTooLongFragment(offsets, data, e_id);
 
-                console.log("new entity id", e_id)
-
                 //Entity
                 data.document.entities.push([
                     e_id,

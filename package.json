@@ -1,6 +1,6 @@
 {
   "name": "jay-brat-frontend-editor",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "BRAT Editor standalone frontend library",
   "main": "index.js",
   "scripts": {
