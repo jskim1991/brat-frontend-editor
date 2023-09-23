@@ -313,7 +313,7 @@ var AnnotatorUI = (function($, window, undefined) {
           }
           clearSelection();
           var mx = evt.pageX - svgPosition.left;
-          var my = evt.pageY - svgPosition.top + 5; // TODO FIXME why +5?!?
+          var my = evt.offsetY + 5; // TODO FIXME why +5?!?
           var y = Math.min(arcDragOriginBox.y, my) - draggedArcHeight;
           var dx = (arcDragOriginBox.center - mx) / 4;
           var path = svg.createPath().
