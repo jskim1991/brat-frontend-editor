@@ -116,7 +116,7 @@ var LocalAjax = (function ($, window, undefined) {
 
                         // Add special attribute for symbolic representation
                         data.document.attributes.push([
-                            "A" + (that.document.attributes.length + 1), //TODO: must absolutely be unique,
+                            "A" + uuidv4(),
                             LONG_ANNOTATION_CONST,
                             e_id,
                             [from, to]
